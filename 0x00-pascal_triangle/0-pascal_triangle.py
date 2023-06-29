@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 this module returns all the integers representing a pascal's triangle
 """
