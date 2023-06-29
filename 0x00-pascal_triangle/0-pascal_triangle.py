@@ -3,10 +3,11 @@
 this module returns all the integers representing a pascal's triangle
 """
 
+
 def pascal_triangle(n):
     """
     a function that creates a pascal triangle
-    """    
+    """
 
     if n <= 0:
         return []
