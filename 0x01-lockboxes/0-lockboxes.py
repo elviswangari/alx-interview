@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+a lockbox module
+"""
+
 
 def canUnlockAll(boxes):
     """
@@ -7,13 +11,17 @@ def canUnlockAll(boxes):
     """
 
     n = len(boxes)
-    visited = set([0])
-    not_visited = set(boxes[0]).difference(set([0]))
-    while len(not_visited) > 0:
-        box = not_visited.pop()
-        if not box or box >= n or box < 0:
-            continue
-        if box not in visited:
-            not_visited = not_visited.union(boxes[box])
-            visited.add(box)
-    return n == len(visited)
+    visited = set()
+    visited.add(0)
+    queue = [0]
+    front = 0  # Index to keep track of the front of the queue
+
+    while front < len(queue):
+        box = queue[front]
+        for item in boxes[box]:
+            if item < n and item not in visited:
+                visited.add(item)
+                queue.append(item)
+        front += 1
+
+    return len(visited) == n
