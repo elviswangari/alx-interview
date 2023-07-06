@@ -7,15 +7,17 @@ def canUnlockAll(boxes):
     """
 
     n = len(boxes)
-    visited = [False] * n
-    visited[0] = True
-    seque_line = [0]
+    visited = set()
+    visited.add(0)
+    queue = [0]
+    front = 0  # Index to keep track of the front of the queue
 
-    while seque_line:
-        box = seque_line.pop(0)
+    while front < len(queue):
+        box = queue[front]
         for item in boxes[box]:
-            if item >= 0 and item < n and not visited[item]:
-                visited[item] = True
-                seque_line.append(item)
+            if item < n and item not in visited:
+                visited.add(item)
+                queue.append(item)
+        front += 1
 
-    return all(visited)
+    return len(visited) == n
