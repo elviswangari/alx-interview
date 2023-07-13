@@ -30,4 +30,3 @@ def minOperations(n):
             ops_count += 1
 
     return ops_count
-
