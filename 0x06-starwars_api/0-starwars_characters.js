@@ -1,29 +1,29 @@
 #!/usr/bin/node
 
-if (process.argv[2] === undefined) {
-  console.log('No argument');
-} else {
-  const id = process.argv[2];
-  const request = require('request');
+const movieId = process.argv[2];
+const request = require('request');
 
-  const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
 
-  request(url, (error, response, body) => {
+const getCharacters = (charactersList, index) => {
+  if (charactersList.length === index) {
+    return;
+  }
+  request(charactersList[index], (error, response, body) => {
     if (error) {
-      console.error(error);
+      console.log(error);
     } else {
-      const charactersArr = JSON.parse(body).characters;
-
-      charactersArr.forEach(element => {
-        request(element, (error, response, body) => {
-          if (error) {
-            console.error(error);
-          } else {
-            const char = JSON.parse(body).name;
-            console.log(char);
-          }
-        });
-      });
+      console.log(JSON.parse(body).name);
+      getCharacters(charactersList, index + 1);
     }
   });
-}
+};
+
+request(url, (error, response, body) => {
+  if (error) {
+    console.log(error);
+  } else {
+    const charactersList = JSON.parse(body).characters;
+    getCharacters(charactersList, 0);
+  }
+});
