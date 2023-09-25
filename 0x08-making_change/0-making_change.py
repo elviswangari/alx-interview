@@ -21,16 +21,14 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    # Initialize a dynamic programming table with inf values
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-
-    # Iterate through each coin denomination
+    coins.sort(reverse=True)
+    change = 0
     for coin in coins:
-        # Update the dp table for amounts from coin to total
-        for amount in range(coin, total + 1):
-            # Calculate the minimum coins needed for the current amount
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
-
-            # Return the result, considering if change is possible
-    return dp[total] if dp[total] != float('inf') else -1
+        if total <= 0:
+            break
+        temp = total // coin
+        change += temp
+        total -= (temp * coin)
+    if total != 0:
+        return -1
+    return change
